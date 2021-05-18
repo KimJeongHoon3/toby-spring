@@ -14,45 +14,21 @@ import java.sql.SQLException;
 public class UserDao {
 
     private final DataSource dataSource;
+    private final JDBCContext jdbcContext;
 
-    public UserDao(DataSource dataSource){
+    public UserDao(DataSource dataSource,JDBCContext jdbcContext){
         this.dataSource = dataSource;
+        this.jdbcContext = jdbcContext;
     }
 
     public void addUser(User user) {
-        Connection con=null;
-        PreparedStatement pstmt=null;
-        try{
-            con=dataSource.getConnection();
-            pstmt=con.prepareStatement("insert into spring_user values(?,?,?)");
+        jdbcContext.workWithStrategy((con) -> {
+            PreparedStatement pstmt=con.prepareStatement("insert into spring_user values(?,?,?)");
             pstmt.setString(1,user.getName());
             pstmt.setInt(2,user.getAge());
             pstmt.setString(3,user.getHobby());
-
-            pstmt.executeUpdate();
-
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally {
-            if(pstmt!=null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-
-            if(con!=null) {
-                try {
-                    con.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-        }
-
-
-
+            return pstmt;
+        });
     }
 
 
@@ -101,37 +77,9 @@ public class UserDao {
     }
 
     public void deleteAll() {
-        contextWithStrategy((con) -> con.prepareStatement("delete from spring_user"));
+        jdbcContext.workWithStrategy((con) -> con.prepareStatement("delete from spring_user"));
     }
 
 
-    public void contextWithStrategy(StrategyStatement strategyStatement){
-        Connection con=null;
-        PreparedStatement pstmt=null;
-        try{
-            con=dataSource.getConnection();
 
-            pstmt=strategyStatement.getPrepareStatement(con);
-            pstmt.executeUpdate();
-
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally {
-            if(pstmt!=null) {
-                try {
-                    pstmt.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-
-            if(con!=null) {
-                try {
-                    con.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-        }
-    }
 }
