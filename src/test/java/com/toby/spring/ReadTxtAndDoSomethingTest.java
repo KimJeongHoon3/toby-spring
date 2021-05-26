@@ -18,7 +18,7 @@ public class ReadTxtAndDoSomethingTest {
 
     @Test
     void testSumInteger() {
-        Assertions.assertEquals(10,cal.sum());
+        Assertions.assertEquals(1+2+3+4,cal.sum());
     }
 
     @Test

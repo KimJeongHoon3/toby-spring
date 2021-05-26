@@ -2,7 +2,10 @@ package com.toby.spring.dao;
 
 import com.toby.spring.domain.User;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -22,6 +25,10 @@ public class UserDao {
     }
 
     public void addUser(User user) {
+        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+
         jdbcContext.workWithStrategy((con) -> {
             PreparedStatement pstmt=con.prepareStatement("insert into spring_user values(?,?,?)");
             pstmt.setString(1,user.getName());

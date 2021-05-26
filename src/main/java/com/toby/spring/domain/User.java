@@ -5,14 +5,20 @@ public class User {
     private String name;
     private int age;
     private String hobby;
+    private Level level;
+    private int recommendCnt;
+    private int loginCnt;
 
     public User() {
     }
 
-    public User(String name, int age, String hobby) {
+    public User(String name, int age, String hobby, Level level, int recommendCnt, int loginCnt) {
         this.name = name;
         this.age = age;
         this.hobby = hobby;
+        this.level = level;
+        this.recommendCnt = recommendCnt;
+        this.loginCnt = loginCnt;
     }
 
     public String getName() {
@@ -37,5 +43,38 @@ public class User {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public int getRecommendCnt() {
+        return recommendCnt;
+    }
+
+    public void setRecommendCnt(int recommendCnt) {
+        this.recommendCnt = recommendCnt;
+    }
+
+    public int getLoginCnt() {
+        return loginCnt;
+    }
+
+    public void setLoginCnt(int loginCnt) {
+        this.loginCnt = loginCnt;
+    }
+
+    public void upgradeLevel() {
+        Level nextLevel=level.nextLevel();
+        if(nextLevel==null){
+            throw new IllegalStateException("cannot upgrade next Level");
+        }else{
+            level=nextLevel;
+        }
     }
 }
