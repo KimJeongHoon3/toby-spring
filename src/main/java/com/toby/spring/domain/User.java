@@ -1,10 +1,15 @@
 package com.toby.spring.domain;
 
 
+import javax.validation.constraints.NotNull;
+
 public class User {
+    @NotNull
     private String name;
     private int age;
     private String hobby;
+
+    @NotNull
     private Level level;
     private int recommendCnt;
     private int loginCnt;

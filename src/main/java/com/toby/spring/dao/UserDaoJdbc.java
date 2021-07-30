@@ -5,10 +5,9 @@ import com.toby.spring.domain.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
 import java.util.List;
-
 
 @Component
 public class UserDaoJdbc {
@@ -42,7 +41,9 @@ public class UserDaoJdbc {
     }
 
     public User get(String id){
+        //jdbcTemplate.queryForObject("select * from spring_user where name=?", new BeanPropertyRowMapper<User>(User.class) ,id);
         return jdbcTemplate.queryForObject("select * from spring_user where name=?", rowMapper ,id);
+
     }
 
     public List<User> getAll(){

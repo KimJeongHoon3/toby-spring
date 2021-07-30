@@ -18,6 +18,36 @@ public class PracticeTest {
         }
     }
 
+    @Test
+    void testInstanceOf2(){
+        String abc="abc";
+        if(abc instanceof Object){
+            System.out.println("작은거에서 큰거로 바꾸려고..");
+        }else{
+            System.out.println("실패");
+        }
+    }
+
+    @Test
+    void testInstanceOf3(){
+        InheritedClazz inheritedClazz=new InheritedClazz();
+
+        if(inheritedClazz instanceof SuperClazz){
+            System.out.println("작은거에서 큰거로 바꾸려고..");
+        }else{
+            System.out.println("실패");
+        }
+    }
+
+    @Test
+    void isAssignableFrom(){
+
+        if(SuperClazz.class.isAssignableFrom(InheritedClazz.class) ){
+            System.out.println("작은거에서 큰거로 바꾸려고..");
+        }else{
+            System.out.println("실패");
+        }
+    }
 
     @Test
     void testClasspathResource(){

@@ -1,0 +1,5 @@
+package com.toby.spring.vol2;
+
+public interface Printer {
+    void print(String str);
+}

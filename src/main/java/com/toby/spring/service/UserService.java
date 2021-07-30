@@ -3,11 +3,12 @@ package com.toby.spring.service;
 import com.toby.spring.dao.UserDaoJdbc;
 import com.toby.spring.domain.User;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
-public class UserService {
+@Service
+public class UserService implements UserServiceIntf {
 
     private final UserDaoJdbc userDaoJdbc;
 
@@ -40,5 +41,25 @@ public class UserService {
             default:
                 throw new UnsupportedOperationException("NOT DEFINE LEVEL TYPE");
         }
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return null;
+    }
+
+    @Override
+    public User findUser(String id) {
+        return null;
+    }
+
+    @Override
+    public boolean removeUser(String id) {
+        return false;
+    }
+
+    @Override
+    public void registerUser(User user) {
+
     }
 }
