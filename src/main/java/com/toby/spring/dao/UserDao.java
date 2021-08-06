@@ -1,6 +1,7 @@
 package com.toby.spring.dao;
 
 import com.toby.spring.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
@@ -17,11 +18,12 @@ import java.sql.SQLException;
 public class UserDao {
 
     private final DataSource dataSource;
-    private final JDBCContext jdbcContext;
 
-    public UserDao(DataSource dataSource,JDBCContext jdbcContext){
+    @Autowired
+    private JDBCContext jdbcContext;
+
+    public UserDao(DataSource dataSource){
         this.dataSource = dataSource;
-        this.jdbcContext = jdbcContext;
     }
 
     public void addUser(User user) {

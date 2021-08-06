@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-@WebMvcTest({UserController.class, LevelFormatter.class, WebConfig.class})
+@WebMvcTest({UserController.class, /*LevelFormatter.class,*/ WebConfig.class})
 public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -117,13 +117,14 @@ public class UserControllerTest {
 
 
     @Test
-    void testRegisterUser_requestBody_Model에데이터등록확_당연안들어감() throws Exception {
+    void testRegisterUser_requestBody_검증시에러내용BindingResult에들어감_Model에데이터등록확_당연안들어감() throws Exception {
         mockMvc.perform(post("/user5").content("{\n" +
-                "    \"name\":\"kim\",\n" +
+//                "    \"name\":\"kim\",\n" +
                 "    \"age\":16,\n" +
                 "    \"hobby\":\"basketball\",\n" +
-                "    \"level\":\"1\"\n" +
-                "}").contentType(MediaType.APPLICATION_JSON_VALUE))
+                "    \"level\":\"GOLD\"\n" + //formatter가 변환해준게 아니라, jackson 컨버터가 json 변환시 알아서 enum은 변환해줌., jackson 에서 에러나면 BindingResult에 에러 안담기고 HttpMessageNotReadableException 이거 던짐..
+//                "    \"level\":1" + //이렇게 숫자로 넣으면 enum의 값이랑 매칭되지않고 내부적으로등록되어있는 배열 순서랑 매칭됨..
+                "}").contentType("application/json;charset=UTF-8"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("user"))
                 .andExpect(view().name("hello"))

@@ -10,6 +10,7 @@ public class ControllerErrorHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_GATEWAY)
     public ErrorVo exceptionHandler(Exception e){
+        e.printStackTrace();
         return new ErrorVo("E999",e.getMessage());
     }
 
