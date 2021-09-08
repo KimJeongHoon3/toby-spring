@@ -19,6 +19,7 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import javax.servlet.ServletException;
 @SpringBootApplication
 @EnableAsync(proxyTargetClass = true)
 public class Application implements ApplicationRunner {
+
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -36,6 +38,13 @@ public class Application implements ApplicationRunner {
 
     @Autowired
     Environment environment;
+
+    @Autowired
+    ServletContext servletContext;
+
+    @Autowired
+    WebApplicationContext webApplicationContext;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         String str=environment.getProperty("os.name");
@@ -43,6 +52,10 @@ public class Application implements ApplicationRunner {
 
         System.out.println(str);
         System.out.println(password);
+
+        ServletContext servletContext1=webApplicationContext.getServletContext();
+
+
     }
 
 }

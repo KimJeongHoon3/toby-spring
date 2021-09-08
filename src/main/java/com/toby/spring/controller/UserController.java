@@ -29,6 +29,29 @@ public class UserController {
         this.userService=userService;
     }
 
+    @GetMapping("/main")
+    @ResponseBody
+    public String main(){
+        return "<!DOCTYPE html>\n" +
+                "<html lang=\"ko\">\n" +
+                "<head>\n" +
+                "\t<meta charset=\"UTF-8\">\n" +
+                "\t<title>HTML form tag - method attribute</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "\n" +
+                "\t<form action=\"/user10\" method=\"post\">\n" +
+                "\t\t이름 : <input type=\"text\" name=\"name\"><br>\n" +
+                "\t\t나이 : <input type=\"text\" name=\"age\"><br>\n" +
+                "      \t나이 : <input type=\"text\" name=\"hobby\"><br>\n" +
+                "        레벨 : <input type=\"text\" name=\"level\"><br>\n" +
+                "        <input type=\"submit\">\n" +
+                "\t</form>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>";
+    }
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
     public String test(){
@@ -50,6 +73,19 @@ public class UserController {
 //        redirectAttributes.addAttribute("queryParam","val");
 //        redirectAttributes.addFlashAttribute("flashMap","val2");
         return "hello";
+    }
+
+    @RequestMapping(value="/user10", method = RequestMethod.POST)
+    @ResponseBody
+    public User registerUser2(@ModelAttribute @Valid User user, BindingResult bindingResult/*, RedirectAttributes redirectAttributes*/){
+        user.setName("kimm");
+        List<ObjectError> allErrors = bindingResult.getAllErrors();
+        for(ObjectError objectError:allErrors){
+            System.out.println(objectError.toString());
+        }
+//        redirectAttributes.addAttribute("queryParam","val");
+//        redirectAttributes.addFlashAttribute("flashMap","val2");
+        return user;
     }
 
     @RequestMapping(value="/user2", method = RequestMethod.POST)
