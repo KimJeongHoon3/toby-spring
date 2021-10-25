@@ -37,8 +37,11 @@ public class SuperTypeToken2 {
 
 
         Type t=b.getClass().getGenericSuperclass();
+
         ParameterizedType pType=(ParameterizedType) t; // Sup<String> 이 ParametrizedType으로 볼수있고, getActualTypeArguments를 통해서 다이아몬드 연산자 안에 선안된 타입들을 모두 가져올수있음..
         System.out.println(pType.getActualTypeArguments()[0]); //만약 Sup<List<String>> 일 경우에도 List<String>으로 잘 가져옴..
+        Class<List> clazz=(Class<List>)((ParameterizedType)(pType.getActualTypeArguments()[0])).getRawType();
+        Class<List<Integer>> clazz_error=(Class<List<Integer>>)((ParameterizedType)(pType.getActualTypeArguments()[0])).getRawType(); //이렇게 rawType으로만 가져와서 검증하는것은 List의 제네릭 타입들에 대한 검증은못함.. 문제가있을듯..
 
     }
 }
